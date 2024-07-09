@@ -1,11 +1,5 @@
-import Phaser from "phaser";
-
-export default class MainGame extends Phaser.Scene {
+export default class Preloader extends Phaser.Scene {
   constructor() {
-    super("MainGame");
-  }
-
-  create() {
-    this.scene.launch("WorldGeneration");
+    super("game");
   }
 }
