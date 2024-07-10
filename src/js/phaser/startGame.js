@@ -3,6 +3,7 @@ import Phaser from "phaser";
 import Preloader from "./scenes/preloader.js";
 import MainGame from "./scenes/gameController.js";
 import WorldGeneration from "./scenes/worldGeneration.js";
+import Player from "./scenes/player.js";
 
 import { GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT } from "../config.js";
 
@@ -12,7 +13,6 @@ class StartGame {
     width: GAME_SCREEN_WIDTH,
     height: GAME_SCREEN_HEIGHT,
     scale: {
-      zoom: 0.5,
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,
       parent: "game-screen-container",
@@ -32,7 +32,7 @@ class StartGame {
       },
     },
     pixel: true,
-    scene: [Preloader, WorldGeneration, MainGame],
+    scene: [Preloader, WorldGeneration, MainGame, Player],
   };
   #GameObj;
 

@@ -6,6 +6,10 @@ export default class MainGame extends Phaser.Scene {
   }
 
   create() {
+    // generating the world
     this.scene.launch("WorldGeneration");
+
+    // spawning the player
+    this.scene.launch("Player");
   }
 }

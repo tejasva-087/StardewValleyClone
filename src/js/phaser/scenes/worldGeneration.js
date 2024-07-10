@@ -33,14 +33,19 @@ export default class WorldGeneration extends Phaser.Scene {
   #tileSet = [];
   #map;
   #object = [];
+  #objectPairs = {
+    trees: [TREE_BIG, TREE_SMALL],
+    mushrooms: [MUSHROOM, MUSHROOMS],
+    flowers: [FLOWER, SUN_FLOWER],
+  };
 
   constructor() {
     super("WorldGeneration");
   }
 
-  generateRandom(arr, startVal, endVal) {
+  generateRandomNumber(startVal, endVal) {
     // Generates random item from an array of objects between certain value
-    return arr[Math.floor(Math.random() * (endVal - startVal + 1)) + startVal];
+    return Math.floor(Math.random() * (endVal - startVal + 1)) + startVal;
   }
 
   create() {
@@ -66,17 +71,30 @@ export default class WorldGeneration extends Phaser.Scene {
     this.#object[3] = this.#map.getObjectLayer(FLOWER_LAYER);
 
     // Spawning random trees (big or small) from object and making them a physicsl object
+    // For Generating trees
     this.#object[0].objects.forEach((object) => {
-      this.physics.add.image(object.x, object.y, TREE_BIG);
+      this.physics.add.image(
+        object.x,
+        object.y,
+        this.#objectPairs.trees[this.generateRandomNumber(0, 1)]
+      );
     });
     this.#object[1].objects.forEach((object) => {
       this.physics.add.image(object.x, object.y, BUSH);
     });
     this.#object[2].objects.forEach((object) => {
-      this.physics.add.image(object.x, object.y, MUSHROOM);
+      this.physics.add.image(
+        object.x,
+        object.y,
+        this.#objectPairs.mushrooms[[this.generateRandomNumber(0, 1)]]
+      );
     });
     this.#object[3].objects.forEach((object) => {
-      this.physics.add.image(object.x, object.y, FLOWER);
+      this.physics.add.image(
+        object.x,
+        object.y,
+        this.#objectPairs.flowers[this.generateRandomNumber(0, 1)]
+      );
     });
   }
 }
