@@ -1,6 +1,12 @@
+import Phaser from "phaser";
+
+import Preloader from "./scenes/preloader.js";
+import MainGame from "./scenes/gameController.js";
+import WorldGeneration from "./scenes/worldGeneration.js";
+
 import { GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT } from "../config.js";
-import { preloader } from "./scenes/preloader.js";
-class MainGame {
+
+class StartGame {
   #config = {
     type: Phaser.AUTO,
     width: GAME_SCREEN_WIDTH,
@@ -26,13 +32,13 @@ class MainGame {
       },
     },
     pixel: true,
-    scene: [Preloader],
+    scene: [Preloader, WorldGeneration, MainGame],
   };
-  #gameObj;
+  #GameObj;
 
-  startGame() {
-    this.#gameObj = new Phaser.Game(this.#config);
+  start() {
+    this.#GameObj = new Phaser.Game(this.#config);
   }
 }
 
-export default new MainGame();
+export default new StartGame();

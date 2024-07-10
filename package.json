@@ -1,18 +1,21 @@
 {
   "name": "stardewvalleyclone",
   "version": "1.0.0",
-  "description": "Stardew valley but with zombies",
+  "description": "A clone of a popular game Stardew Valley.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "parcel ./src/index.html"
   },
   "author": "Tejasva Khandelwal",
   "license": "ISC",
-  "devDependencies": {
-    "parcel": "^2.12.0",
-    "sass": "^1.77.6"
-  },
   "dependencies": {
-    "phaser3": "^0.4.34"
+    "core-js": "^3.37.1",
+    "phaser": "^3.80.1"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.12.0",
+    "parcel": "^2.12.0",
+    "process": "^0.11.10",
+    "sass": "^1.77.6"
   }
 }

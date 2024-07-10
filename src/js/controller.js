@@ -1,3 +1,4 @@
-import MainGame from "./phaser/mainGame.js";
+import "core-js";
+import StartGame from "./phaser/startGame.js";
 
-MainGame.startGame();
+StartGame.start();
