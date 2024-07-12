@@ -13,15 +13,13 @@ class StartGame {
     width: GAME_SCREEN_WIDTH,
     height: GAME_SCREEN_HEIGHT,
     scale: {
-      mode: Phaser.Scale.FIT,
-      autoCenter: Phaser.Scale.CENTER_BOTH,
       parent: "game-screen-container",
     },
     physics: {
       default: "arcade",
       arcade: {
         gravity: 0,
-        debug: true,
+        debug: false,
       },
     },
     camera: {

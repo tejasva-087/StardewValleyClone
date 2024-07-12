@@ -32,12 +32,13 @@ import {
 export default class WorldGeneration extends Phaser.Scene {
   #tileSet = [];
   #map;
-  #object = [];
+  #objectLayers = [];
   #objectPairs = {
     trees: [TREE_BIG, TREE_SMALL],
     mushrooms: [MUSHROOM, MUSHROOMS],
     flowers: [FLOWER, SUN_FLOWER],
   };
+  #objects;
 
   constructor() {
     super("WorldGeneration");
@@ -65,32 +66,36 @@ export default class WorldGeneration extends Phaser.Scene {
     this.#map.createLayer(GRASS_LAYER, this.#tileSet[0]);
 
     // 4) creating object
-    this.#object[0] = this.#map.getObjectLayer(TREE_LAYER);
-    this.#object[1] = this.#map.getObjectLayer(BUSH_LAYER);
-    this.#object[2] = this.#map.getObjectLayer(MUSHROOM_LAYER);
-    this.#object[3] = this.#map.getObjectLayer(FLOWER_LAYER);
+    this.#objectLayers[0] = this.#map.getObjectLayer(TREE_LAYER);
+    this.#objectLayers[1] = this.#map.getObjectLayer(BUSH_LAYER);
+    this.#objectLayers[2] = this.#map.getObjectLayer(MUSHROOM_LAYER);
+    this.#objectLayers[3] = this.#map.getObjectLayer(FLOWER_LAYER);
 
     // Spawning random trees (big or small) from object and making them a physicsl object
-    // For Generating trees
-    this.#object[0].objects.forEach((object) => {
-      this.physics.add.image(
+    // TREES
+    this.#objects = this.physics.add.staticGroup();
+    this.#objectLayers[0].objects.forEach((object) => {
+      this.#objects.create(
         object.x,
         object.y,
         this.#objectPairs.trees[this.generateRandomNumber(0, 1)]
       );
     });
-    this.#object[1].objects.forEach((object) => {
-      this.physics.add.image(object.x, object.y, BUSH);
+    // BUSH
+    this.#objectLayers[1].objects.forEach((object) => {
+      this.#objects.create(object.x, object.y, BUSH);
     });
-    this.#object[2].objects.forEach((object) => {
-      this.physics.add.image(
+    // MUSHROOMS
+    this.#objectLayers[2].objects.forEach((object) => {
+      this.#objects.create(
         object.x,
         object.y,
         this.#objectPairs.mushrooms[[this.generateRandomNumber(0, 1)]]
       );
     });
-    this.#object[3].objects.forEach((object) => {
-      this.physics.add.image(
+    // FLOWERS
+    this.#objectLayers[3].objects.forEach((object) => {
+      this.#objects.create(
         object.x,
         object.y,
         this.#objectPairs.flowers[this.generateRandomNumber(0, 1)]
