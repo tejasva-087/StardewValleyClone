@@ -1,13 +1,13 @@
 import Phaser from "phaser";
 
 import Preloader from "./scenes/preloader.js";
-import MainGame from "./scenes/gameController.js";
-import WorldGeneration from "./scenes/worldGeneration.js";
-import Player from "./scenes/player.js";
+import GameController from "./scenes/gameController.js";
+
 
 import { GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT } from "../config.js";
 
 class StartGame {
+  #GameObj;
   #config = {
     type: Phaser.AUTO,
     width: GAME_SCREEN_WIDTH,
@@ -16,23 +16,20 @@ class StartGame {
       parent: "game-screen-container",
     },
     physics: {
-      default: "arcade",
-      arcade: {
+      default: "matter",
+      matter: {
+      gravity: { y: 0, x: 0, z: 0 },
+      debug: true,
+    }
+      
+    },
+    arcade: {
+        degub: true,
         gravity: 0,
-        debug: false,
       },
-    },
-    camera: {
-      startView: {
-        target: 0,
-        clearBeforeRender: true,
-        backgroundColor: "#ffffff",
-      },
-    },
     pixel: true,
-    scene: [Preloader, WorldGeneration, MainGame, Player],
+    scene: [Preloader, GameController],
   };
-  #GameObj;
 
   start() {
     this.#GameObj = new Phaser.Game(this.#config);
