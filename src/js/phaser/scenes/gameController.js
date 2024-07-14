@@ -5,6 +5,7 @@ import { PLAYER_SPEED } from "../../config.js";
 export default class GameController extends Phaser.Scene {
   #player;
   #playerBody;
+  #playerDirection;
   #map;
   _wkey;
   _akey;
@@ -53,13 +54,7 @@ export default class GameController extends Phaser.Scene {
     
     // 1) trees
     const trees = this.#map.getObjectLayer("Tree");
-    // let treeCollisionArea;
     trees.objects.forEach((tree) => {
-      // this.matter.add
-      //   .rectangle(tree.x, tree.y, 100, 100, {
-      //     isStatic: true,
-      //     isSensor: true,
-      //   });
       this.matter.add
         .image(tree.x, tree.y + 40, "treeBig", undefined, {
           isStatic: true,
@@ -79,7 +74,7 @@ export default class GameController extends Phaser.Scene {
         })
         .setStatic(true)
         .setDepth(2)
-        .setOrigin(0.5, 0.85).setName('tree').setInteractive();
+        .setOrigin(0.5, 0.85).setName('tree').setInteractive()
     });
     
 
@@ -99,29 +94,22 @@ export default class GameController extends Phaser.Scene {
       height: 54, 
     }).setFixedRotation(0).setScale(0.75).setDepth(1).setName('player');
 
-    // Setting up the overlap
-    // this.#player.setOnCollide((data) => {
-    //   if (data.bodyB.gameObject.name === 'player' && data.bodyA.gameObject.name === 'tree') {
-    //     data.bodyA.gameObject.setAlpha(0.5);
-    //   }
-    // });
-    let playerCategory = this.matter.world.nextCategory();
-    let treeCategory = this.matter.world.nextCategory();
-    this.#player.setCollisionCategory(playerCategory);
-    // this.#player.setCollidesWith(treeCategory);
-
+    // Setting up the collision
     this.matter.world.on("collisionstart", (e, bodyA, bodyB) => {
-      if (bodyB.gameObject.name === 'player' && bodyA.gameObject.name === 'tree') {
+      if (bodyB.gameObject?.name === 'player' && bodyA.gameObject?.name === 'tree') {
         bodyA.gameObject.setAlpha(0.5);
+        bodyA.gameObject.on("pointerdown", () => {
+          bodyA.gameObject?.destroy();
+        });
       }
     });
 
     this.matter.world.on("collisionend", (e, bodyA, bodyB) => {
       if (
-        bodyB.gameObject.name === "player" &&
-        bodyA.gameObject.name === "tree"
+        bodyB.gameObject?.name === "player" &&
+        bodyA.gameObject?.name === "tree"
       ) {
-        bodyA.gameObject.setAlpha(1);
+        bodyA.gameObject?.setAlpha(1);
       }
     });
 
@@ -139,14 +127,47 @@ export default class GameController extends Phaser.Scene {
     );
 
     this.anims.create({
-      key: "idle",
+      key: "downidle",
       frames: this.anims.generateFrameNames("player", {
         stat: 0,
         end: 1,
         prefix: "d_idle",
         suffix: ".png",
       }),
-      frameRate: 1,
+      frameRate: 2,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "upidle",
+      frames: this.anims.generateFrameNames("player", {
+        stat: 0,
+        end: 1,
+        prefix: "u_idle",
+        suffix: ".png",
+      }),
+      frameRate: 2,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "leftidle",
+      frames: this.anims.generateFrameNames("player", {
+        stat: 0,
+        end: 1,
+        prefix: "l_idle",
+        suffix: ".png",
+      }),
+      frameRate: 2,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "rightidle",
+      frames: this.anims.generateFrameNames("player", {
+        stat: 0,
+        end: 1,
+        prefix: "r_idle",
+        suffix: ".png",
+      }),
+      frameRate: 2,
       repeat: -1,
     });
     // MOVE UP
@@ -204,22 +225,40 @@ export default class GameController extends Phaser.Scene {
       // MOVE UP
       this.#player.setVelocity(0, -PLAYER_SPEED);
       this.#player.anims.play("moveUp", true);
+      this.#playerDirection = 'up';
     } else if (this._skey.isDown) {
       // MOVE DOWN
       this.#player.setVelocity(0, PLAYER_SPEED);
       this.#player.anims.play("moveDown", true);
+      this.#playerDirection = "down";
     } else if (this._akey.isDown) {
       // MOVE LEFT
       this.#player.setVelocity(-PLAYER_SPEED, 0);
       this.#player.anims.play("moveLeft", true);
+      this.#playerDirection = "left";
     } else if (this._dkey.isDown) {
       // MOVE RIGHT
       this.#player.setVelocity(PLAYER_SPEED, 0);
       this.#player.anims.play("moveRight", true);
+      this.#playerDirection = "right";
     } else {
       // IDLE
       this.#player.setVelocity(0, 0);
-      this.#player.anims.play("idle", true);
+      switch (this.#playerDirection) {
+        case "up":
+          this.#player.anims.play("upidle", true);
+          break;
+        case "down":
+          this.#player.anims.play("downidle", true);
+          break;
+        case "left":
+          this.#player.anims.play("leftidle", true);
+          break;
+        case "right":
+          this.#player.anims.play("rightidle", true);
+          break;
+      }
+      
     }
   }
 }
