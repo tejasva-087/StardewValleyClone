@@ -50,27 +50,38 @@ export default class GameController extends Phaser.Scene {
     collisionLayer.setCollisionByProperty({ collides: true });
     this.matter.world.convertTilemapLayer(collisionLayer);
     collisionLayer.setAlpha(0);
-
-    // 5) Creating objects
-    const { tiles: collisionData } = this.cache.json.get("objectCollision");
-
-    console.log(collisionData);
     
-    // const treeCollisonObj = collisionData.
     // 1) trees
     const trees = this.#map.getObjectLayer("Tree");
+    // let treeCollisionArea;
     trees.objects.forEach((tree) => {
+      // this.matter.add
+      //   .rectangle(tree.x, tree.y, 100, 100, {
+      //     isStatic: true,
+      //     isSensor: true,
+      //   });
       this.matter.add
-        .image(tree.x, tree.y, "treeBig")
+        .image(tree.x, tree.y + 40, "treeBig", undefined, {
+          isStatic: true,
+        })
         .setFixedRotation(0)
-        // .setBody({
-        //   type: "polygon",
-        //   vertices:collisionData.treeBig,
-        // })
+        .setBody({
+          type: "fromVerts",
+          verts: [
+            { x: 0, y: 0 },
+            { x: 26.8421, y: 0.394737 },
+            { x: 31.9737, y: 15.7895 },
+            { x: 33.9474, y: 18.1579 },
+            { x: 18.5526, y: 24.0789 },
+            { x: 14.6053, y: 27.2368 },
+            { x: -4.34211, y: 16.9737 },
+          ],
+        })
         .setStatic(true)
-        .setDepth(2);
+        .setDepth(2)
+        .setOrigin(0.5, 0.85).setName('tree').setInteractive();
     });
-
+    
 
     // Creating player spawn points
     const spawnLayer = this.#map.getObjectLayer("SpawnPoint");
@@ -85,9 +96,34 @@ export default class GameController extends Phaser.Scene {
     ).setBody({
       type: "rectangle",
       width: 52, 
-      height: 74, 
-    }).setFixedRotation(0).setScale(0.75).setDepth(1);
-      
+      height: 54, 
+    }).setFixedRotation(0).setScale(0.75).setDepth(1).setName('player');
+
+    // Setting up the overlap
+    // this.#player.setOnCollide((data) => {
+    //   if (data.bodyB.gameObject.name === 'player' && data.bodyA.gameObject.name === 'tree') {
+    //     data.bodyA.gameObject.setAlpha(0.5);
+    //   }
+    // });
+    let playerCategory = this.matter.world.nextCategory();
+    let treeCategory = this.matter.world.nextCategory();
+    this.#player.setCollisionCategory(playerCategory);
+    // this.#player.setCollidesWith(treeCategory);
+
+    this.matter.world.on("collisionstart", (e, bodyA, bodyB) => {
+      if (bodyB.gameObject.name === 'player' && bodyA.gameObject.name === 'tree') {
+        bodyA.gameObject.setAlpha(0.5);
+      }
+    });
+
+    this.matter.world.on("collisionend", (e, bodyA, bodyB) => {
+      if (
+        bodyB.gameObject.name === "player" &&
+        bodyA.gameObject.name === "tree"
+      ) {
+        bodyA.gameObject.setAlpha(1);
+      }
+    });
 
     this._wkey = this.input.keyboard.addKey("W");
     this._akey = this.input.keyboard.addKey("A");
