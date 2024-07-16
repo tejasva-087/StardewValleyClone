@@ -1,22 +1,33 @@
 {
-  "name": "stardewvalleyclone",
+  "name": "stardew_valley",
   "version": "1.0.0",
-  "description": "A clone of a popular game Stardew Valley.",
-  "main": "index.js",
+  "description": "Stardew valley game the game of survival",
+  "main": "./src/electron.js",
   "scripts": {
-    "start": "parcel ./src/index.html"
+    "start:electron": "electron .",
+    "start:parcel": "parcel ./src/frontend/index.html",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "author": "Tejasva Khandelwal",
   "license": "ISC",
-  "dependencies": {
-    "core-js": "^3.37.1",
-    "matter-js": "^0.20.0",
-    "phaser": "^3.80.1"
-  },
   "devDependencies": {
+    "@electron-forge/cli": "^7.4.0",
+    "@electron-forge/maker-deb": "^7.4.0",
+    "@electron-forge/maker-rpm": "^7.4.0",
+    "@electron-forge/maker-squirrel": "^7.4.0",
+    "@electron-forge/maker-zip": "^7.4.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
+    "@electron-forge/plugin-fuses": "^7.4.0",
+    "@electron/fuses": "^1.8.0",
     "@parcel/transformer-sass": "^2.12.0",
+    "electron": "^31.2.0",
+    "npm-run-all": "^4.1.5",
     "parcel": "^2.12.0",
-    "process": "^0.11.10",
-    "sass": "^1.77.6"
+    "sass": "^1.77.8"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.1"
   }
 }
