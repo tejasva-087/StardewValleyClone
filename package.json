@@ -4,8 +4,8 @@
   "description": "Stardew valley game the game of survival",
   "main": "./src/electron.js",
   "scripts": {
-    "start:electron": "electron .",
-    "start:parcel": "parcel ./src/frontend/index.html",
+    "electron": "electron .",
+    "parcel": "parcel ./src/frontend/index.html",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make"
@@ -25,9 +25,11 @@
     "electron": "^31.2.0",
     "npm-run-all": "^4.1.5",
     "parcel": "^2.12.0",
+    "process": "^0.11.10",
     "sass": "^1.77.8"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.1"
+    "electron-squirrel-startup": "^1.0.1",
+    "phaser": "^3.80.1"
   }
 }
