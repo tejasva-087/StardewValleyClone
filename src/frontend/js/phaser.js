@@ -1,7 +1,7 @@
 import Phaser from "phaser";
-import { Game } from "./phaserScenes/game.js";
-import { Preloader } from "./phaserScenes/preloader.js";
-import { BattleScene } from "./phaserScenes/battleScene.js";
+import { Game } from "./scenes/game.js";
+import { Preloader } from "./scenes/preloader.js";
+import { BattleScene } from "./scenes/battleScene.js";
 import { SCREEN_HEIGHT, SCREEN_WIDTH, SCENES } from "./config.js";
 
 class StartGame {

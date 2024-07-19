@@ -1,5 +1,5 @@
-export const SCREEN_WIDTH = window.innerWidth;
-export const SCREEN_HEIGHT = window.innerHeight;
+export const SCREEN_WIDTH = 1024;
+export const SCREEN_HEIGHT = 576;
 
 export const SCENES = Object.freeze({
   PRELOADER: "Preloader",
@@ -24,11 +24,4 @@ export const BATTLE_ASSETS = Object.freeze({
 export const MONSTERS = Object.freeze({
   IGUANIGNITE: "iguanignite",
   CARNODUSK: "carnodusk",
-});
-
-export const BATTLE_MENU_OPTIONS = Object.freeze({
-  FIGHT: "fight",
-  SWITCH: "switch",
-  ITEM: "item",
-  FLEE: "flee",
 });
