@@ -1,11 +1,18 @@
 import { Scene } from "phaser";
 
+// @ts-ignore
 import batelBg from "../../assets/images/monster-tamer/battle-backgrounds/forest-background.png";
+// @ts-ignore
 import detailBar from "../../assets/images/kenneys-assets/ui-space-expansion/custom-ui.png";
+// @ts-ignore
 import rightcap from "../../assets/images/kenneys-assets/ui-space-expansion/barHorizontal_green_right.png";
+// @ts-ignore
 import leftCap from "../../assets/images/kenneys-assets/ui-space-expansion/barHorizontal_green_left.png";
+// @ts-ignore
 import middle from "../../assets/images/kenneys-assets/ui-space-expansion/barHorizontal_green_mid.png";
+// @ts-ignore
 import iguanignite from "../../assets/images/monster-tamer/monsters/iguanignite.png";
+// @ts-ignore
 import carnodusk from "../../assets/images/monster-tamer/monsters/carnodusk.png";
 
 import {

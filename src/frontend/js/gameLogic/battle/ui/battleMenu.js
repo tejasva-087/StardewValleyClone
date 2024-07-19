@@ -1,4 +1,4 @@
-import { MONSTERS, BATTLE_ASSETS, HEALTH_BAR } from "../../../config.js";
+import { MONSTERS } from "../../../config.js";
 
 // attack options for the player
 const BATTLE_MENU_OPTIONS = Object.freeze({
@@ -16,6 +16,48 @@ const BATTLE_MENU_TEXT_STYLE = Object.freeze({
 
 export class BattleMenu {
   #scene;
+  #monsterAttackMenu;
+  #subContainer;
+  #gameLine1;
+  #gameLine2;
+
+  // show lines
+  showlines() {
+    this.#gameLine1.setAlpha(1);
+    this.#gameLine2.setAlpha(1);
+  }
+  // hide lines
+  hidelines() {
+    this.#gameLine1.setAlpha(0);
+    this.#gameLine2.setAlpha(0);
+  }
+
+  // show monster attack menu
+  showMonsterAttacks() {
+    this.#monsterAttackMenu.setAlpha(1);
+  }
+  // hide monster attack menu
+  hideMonsterAttacks() {
+    this.#monsterAttackMenu.setAlpha(0);
+  }
+
+  // show monster sub container
+  showSubContainer() {
+    this.#subContainer.setAlpha(1);
+  }
+  // hide monster sub container
+  hideSubContainer() {
+    this.#subContainer.setAlpha(0);
+  }
+
+  // showing the battel screen
+  showMainBattelMenu() {
+    this.#gameLine1.setText("What should");
+    this.showSubContainer();
+    this.showlines();
+  }
+
+  hideBattleScene() {}
 
   // creating menue text
   #createMenueText(x, y, text, style) {
@@ -24,7 +66,7 @@ export class BattleMenu {
 
   // creating monster menue container
   #createMonsterMenuContainer(x, y) {
-    return this.#scene.add.container(x, y, [
+    this.#monsterAttackMenu = this.#scene.add.container(x, y, [
       this.#createMenueText(
         40,
         45,
@@ -50,6 +92,8 @@ export class BattleMenu {
         BATTLE_MENU_TEXT_STYLE
       ),
     ]);
+    this.hideMonsterAttacks();
+    return this.#monsterAttackMenu;
   }
 
   // creating player menue
@@ -92,7 +136,7 @@ export class BattleMenu {
 
   // creatint the player sub info container
   #createSubInfoContainer(x, y) {
-    return this.#scene.add.container(x, y, [
+    this.#subContainer = this.#scene.add.container(x, y, [
       // 1) creating the sub info pane
       this.#createSubInfoPane(125, 520, "0xede4f3", {
         color: "0x905ac2",
@@ -101,10 +145,24 @@ export class BattleMenu {
       }),
       this.#createPlayerMenue(0, 0),
     ]);
+    this.hideSubContainer();
+    return this.#subContainer;
   }
 
   // creating the main main menu pane
   #createMainInfoPane(height, padding, color, stroke) {
+    this.#gameLine1 = this.#scene.add
+      .text(20, 468, `What should`, BATTLE_MENU_TEXT_STYLE)
+      .setDepth(2);
+    this.#gameLine2 = this.#scene.add
+      .text(
+        20,
+        512,
+        `${MONSTERS.IGUANIGNITE.toUpperCase()} do next?`,
+        BATTLE_MENU_TEXT_STYLE
+      )
+      .setDepth(2);
+    this.hidelines();
     return this.#scene.add
       .rectangle(
         padding,

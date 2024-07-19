@@ -16,7 +16,6 @@ class StartGame {
       autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     pixelArt: true,
-    backgroundColor: "red",
   };
   #game = new Phaser.Game(this.#config); // MAIN GAME OBJECT
 

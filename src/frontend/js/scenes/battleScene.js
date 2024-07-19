@@ -53,7 +53,7 @@ export class BattleScene extends Scene {
   }
 
   #createMonster({ x, y, key, flip = false }) {
-    this.add.image(x, y, key, 0).setFlip(flip);
+    this.add.image(x, y, key, 0).setFlipX(flip);
   }
 
   #createMonsterDetailBar({ x, y, key = DETAIL_BAR_BG.KEY, scaleY = 1 }) {
@@ -118,29 +118,11 @@ export class BattleScene extends Scene {
     });
 
     // 3) creating the monster detailbar
-    this.#createPlayerDetailContainer(560, 315, false);
-    this.#createEnemyDetailContainer(0, 0, true);
-    // const enemyMonsterName = this.add
-    //   .text(30, 20, MONSTERS.CARNODUSK.toUpperCase(), {
-    //     color: "#7E3D3F",
-    //     fontSize: "32px",
-    //   })
-    //   .setOrigin(0, 0);
-    // this.add.container(30, 30, [
-    //   this.add.image(0, 0, HEALTH_BAR.KEY).setOrigin(0, 0).setScale(1, 0.8),
-    //   enemyMonsterName,
-    //   this.#createHealthBar(34, 34),
-    //   this.add.text(enemyMonsterName.width + 35, 23, "L5", {
-    //     color: "#ED474B",
-    //     fontSize: "24px",
-    //   }),
-    //   this.add.text(30, 55, "HP", {
-    //     color: "#FF6505",
-    //     fontStyle: "italic",
-    //     fontSize: "24px",
-    //   }),
-    // ]);
-    // rendering the main and sub info pane
+    this.#createPlayerDetailContainer(560, 315);
+    this.#createEnemyDetailContainer(0, 0);
+
+    // 4) creating the battle UI
     this.#battleMenu = new BattleMenu(this);
+    // this.#battleMenu.showMainBattelMenu();
   }
 }
