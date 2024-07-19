@@ -11,11 +11,11 @@ export const BACKGROUND_IMAGE = Object.freeze({
   KEY: "backgroundForest",
 });
 
-export const HEALTH_BAR = Object.freeze({
-  KEY: "healthBar",
+export const DETAIL_BAR_BG = Object.freeze({
+  KEY: "detailBar",
 });
 
-export const BATTLE_ASSETS = Object.freeze({
+export const HEALTH_BARS = Object.freeze({
   RIGHTCAP: "rightcap",
   LEFTCAP: "leftCap",
   MIDDLE: "middle",

@@ -56,26 +56,26 @@ export class BattleMenu {
   #createPlayerMenue(x, y) {
     return this.#scene.add.container(x, y, [
       this.#createMenueText(
-        40,
         45,
+        28,
         BATTLE_MENU_OPTIONS.FIGHT,
         BATTLE_MENU_TEXT_STYLE
       ),
       this.#createMenueText(
-        180,
-        45,
+        225,
+        28,
         BATTLE_MENU_OPTIONS.SWITCH,
         BATTLE_MENU_TEXT_STYLE
       ),
       this.#createMenueText(
         40,
-        95,
+        75,
         BATTLE_MENU_OPTIONS.ITEM,
         BATTLE_MENU_TEXT_STYLE
       ),
       this.#createMenueText(
-        180,
-        95,
+        225,
+        75,
         BATTLE_MENU_OPTIONS.FLEE,
         BATTLE_MENU_TEXT_STYLE
       ),
@@ -94,7 +94,7 @@ export class BattleMenu {
   #createSubInfoContainer(x, y) {
     return this.#scene.add.container(x, y, [
       // 1) creating the sub info pane
-      this.#createSubInfoPane(125, 450, "0xede4f3", {
+      this.#createSubInfoPane(125, 520, "0xede4f3", {
         color: "0x905ac2",
         lineWidth: 6,
         alpha: 1,
@@ -132,6 +132,6 @@ export class BattleMenu {
     this.#createMonsterMenuContainer(0, 428);
 
     // 2) Creating the sub info pane
-    this.#createSubInfoContainer(573, 446);
+    this.#createSubInfoContainer(503, 446);
   }
 }
