@@ -5,6 +5,7 @@ import {
   MONSTERS,
   DETAIL_BAR_BG,
   HEALTH_BARS,
+  DIRECTION_OBJECT,
 } from "../config.js";
 import { BattleMenu } from "../gameLogic/battle/ui/battleMenu.js";
 
@@ -29,12 +30,20 @@ const HP_DETAIL_TEXT_STYLE = Object.freeze({
 });
 
 export class BattleScene extends Scene {
+  /** @type {BattleMenu} */
   #battleMenu;
+  /** @type {Phaser.Types.Input.Keyboard.CursorKeys} */
+  #cursor;
 
   constructor() {
     super(SCENES.BATTLE);
   }
 
+  /**
+   * @param {number} x the x position
+   * @param {number} y the y position
+   * @return {Phaser.GameObjects.Container}
+   */
   #createHealthBar(x, y) {
     const scaleY = 0.7;
     const leftCap = this.add
@@ -52,18 +61,22 @@ export class BattleScene extends Scene {
     return this.add.container(x, y, [leftCap, middleCap, rightcap]);
   }
 
+  // utility monster image generator method
   #createMonster({ x, y, key, flip = false }) {
     this.add.image(x, y, key, 0).setFlipX(flip);
   }
 
+  // utility betailbar bg generator method
   #createMonsterDetailBar({ x, y, key = DETAIL_BAR_BG.KEY, scaleY = 1 }) {
     return this.add.image(x, y, key).setOrigin(0, 0).setScale(1, scaleY);
   }
 
+  // utility text generator method
   #createText(x, y, text, style) {
     return this.add.text(x, y, text.toUpperCase(), style);
   }
 
+  // Creates the player detail bar
   #createPlayerDetailContainer(x, y) {
     const playerName = this.#createText(
       30,
@@ -84,6 +97,7 @@ export class BattleScene extends Scene {
     ]);
   }
 
+  // Creates the enemy detail bar
   #createEnemyDetailContainer(x, y) {
     const monsterName = this.#createText(
       30,
@@ -124,5 +138,41 @@ export class BattleScene extends Scene {
     // 4) creating the battle UI
     this.#battleMenu = new BattleMenu(this);
     // this.#battleMenu.showMainBattelMenu();
+
+    // 5) creating the cursor keys
+    this.#cursor = this.input.keyboard.createCursorKeys();
+    this.#cursor.down;
+  }
+
+  update() {
+    const wasSpaceKeyPressed = Phaser.Input.Keyboard.JustDown(
+      this.#cursor.space
+    );
+    if (wasSpaceKeyPressed) {
+      this.#battleMenu.handelPlayerInputs("OK");
+      return;
+    }
+
+    if (Phaser.Input.Keyboard.JustDown(this.#cursor.shift)) {
+      this.#battleMenu.handelPlayerInputs("CANCEL");
+      return;
+    }
+    /**
+     * @type {import("../config.js").Direction}
+     */
+    let selectedDirection = DIRECTION_OBJECT.NONE;
+    if (this.#cursor.left.isDown) {
+      selectedDirection = DIRECTION_OBJECT.LEFT;
+    } else if (this.#cursor.down.isDown) {
+      selectedDirection = DIRECTION_OBJECT.DOWN;
+    } else if (this.#cursor.right.isDown) {
+      selectedDirection = DIRECTION_OBJECT.RIGHT;
+    } else if (this.#cursor.up.isDown) {
+      selectedDirection = DIRECTION_OBJECT.UP;
+    }
+
+    if (selectedDirection !== DIRECTION_OBJECT.NONE) {
+      this.#battleMenu.handelPlayerInputs(selectedDirection);
+    }
   }
 }
