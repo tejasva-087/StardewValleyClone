@@ -5,9 +5,10 @@ import {
   MONSTERS,
   DETAIL_BAR_BG,
   HEALTH_BARS,
-  DIRECTION_OBJECT,
 } from "../config.js";
-import { BattleMenu } from "../gameLogic/battle/ui/battleMenu.js";
+
+import { DIRECTION_OBJECT } from "../gameLogic/battle/ui/menu/battleMenuConfig.js";
+import { BattleMenu } from "../gameLogic/battle/ui/menu/battleMenu.js";
 
 const HP_TEXT_STYLE = Object.freeze({
   fontSize: "24px",
@@ -150,6 +151,22 @@ export class BattleScene extends Scene {
     );
     if (wasSpaceKeyPressed) {
       this.#battleMenu.handelPlayerInputs("OK");
+
+      // cheking if the player has selected an attack and display text
+      if (this.#battleMenu.selectedAttack === undefined) return;
+
+      console.log(
+        "Player selected the attack: ",
+        this.#battleMenu.selectedAttack
+      );
+      this.#battleMenu.hideMonsterAttacks();
+      this.#battleMenu.updateInfoPaneMessages(
+        ["Yout player attacks the ememy"],
+        () => {
+          this.#battleMenu.showMainBattelMenu();
+        }
+      );
+
       return;
     }
 
@@ -158,7 +175,7 @@ export class BattleScene extends Scene {
       return;
     }
     /**
-     * @type {import("../config.js").Direction}
+     * @type {import("../gameLogic/battle/ui/menu/battleMenuConfig.js").Direction}
      */
     let selectedDirection = DIRECTION_OBJECT.NONE;
     if (this.#cursor.left.isDown) {
