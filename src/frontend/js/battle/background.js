@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { BACKGROUND_IMAGE } from "../../config.js";
+import { BACKGROUND_IMAGE } from "../config.js";
 
 export class Background {
   /** @type {Phaser.Scene} */

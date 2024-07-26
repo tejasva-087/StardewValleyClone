@@ -1,10 +1,12 @@
 import { Scene } from "phaser";
 import { SCENES, MONSTERS, DETAIL_BAR_BG } from "../config.js";
 
-import { DIRECTION_OBJECT } from "../gameLogic/battle/ui/menu/battleMenuConfig.js";
-import { BattleMenu } from "../gameLogic/battle/ui/menu/battleMenu.js";
-import { Background } from "../gameLogic/battle/background.js";
-import { HealthBar } from "../gameLogic/battle/ui/healthBar.js";
+import { DIRECTION_OBJECT } from "../battle/ui/menu/battleMenuConfig.js";
+import { BattleMenu } from "../battle/ui/menu/battleMenu.js";
+import { Background } from "../battle/background.js";
+import { HealthBar } from "../battle/ui/healthBar.js";
+import { EnemyMonster } from "../battle/monsters/ememyMonster.js";
+import { BattleMonster } from "../battle/monsters/battleMonster.js";
 
 const HP_TEXT_STYLE = Object.freeze({
   fontSize: "24px",
@@ -31,9 +33,10 @@ export class BattleScene extends Scene {
   #battleMenu;
   /** @type {Phaser.Types.Input.Keyboard.CursorKeys} */
   #cursor;
+  /** @type {EnemyMonster} */
+  #activeEnemyBattleMonster;
 
   #playerHealthBar;
-  #enemyHealthBar;
 
   constructor() {
     super(SCENES.BATTLE);
@@ -100,6 +103,19 @@ export class BattleScene extends Scene {
     const background = new Background(this);
     background.showForest();
 
+    this.#activeEnemyBattleMonster = new EnemyMonster({
+      scene: this,
+      monsterDetails: {
+        name: MONSTERS.CARNODUSK,
+        assetKey: MONSTERS.CARNODUSK,
+        assetFrame: 0,
+        currentHp: 25,
+        maxHp: 25,
+        attackIds: [],
+        baseAttackValue: 5,
+      },
+    });
+
     // 2) creating the monsters
     this.#createMonster({ x: 800, y: 150, key: MONSTERS.CARNODUSK });
     this.#createMonster({
@@ -151,7 +167,7 @@ export class BattleScene extends Scene {
       return;
     }
     /**
-     * @type {import("../gameLogic/battle/ui/menu/battleMenuConfig.js").Direction}
+     * @type {import("../battle/ui/menu/battleMenuConfig.js").Direction}
      */
     let selectedDirection = DIRECTION_OBJECT.NONE;
     if (this.#cursor.left.isDown) {

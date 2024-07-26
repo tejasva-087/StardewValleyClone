@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { HEALTH_BARS } from "../../../config.js";
+import { HEALTH_BARS } from "../../config.js";
 
 export class HealthBar {
   /** @type {Phaser.Scene} */
@@ -136,7 +136,7 @@ export class HealthBar {
         this.#middleCap.visible = isVisible;
         this.#rightCap.visible = isVisible;
       },
-      onComplete: options?.calback,
+      onComplete: options?.callback,
     });
   }
 }

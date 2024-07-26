@@ -1,6 +1,6 @@
 import Phaser from "phaser";
-import { MONSTERS, UI_ASSET_KEYS } from "../../../../config.js";
-import { exhaustiveGuard } from "../../../../helper.js";
+import { MONSTERS, UI_ASSET_KEYS } from "../../../config.js";
+import { exhaustiveGuard } from "../../../helper.js";
 import {
   DIRECTION_OBJECT,
   BATTLE_MENU_TEXT_STYLE,
