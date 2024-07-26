@@ -1,14 +1,10 @@
 import { Scene } from "phaser";
-import {
-  SCENES,
-  BACKGROUND_IMAGE,
-  MONSTERS,
-  DETAIL_BAR_BG,
-  HEALTH_BARS,
-} from "../config.js";
+import { SCENES, MONSTERS, DETAIL_BAR_BG } from "../config.js";
 
 import { DIRECTION_OBJECT } from "../gameLogic/battle/ui/menu/battleMenuConfig.js";
 import { BattleMenu } from "../gameLogic/battle/ui/menu/battleMenu.js";
+import { Background } from "../gameLogic/battle/background.js";
+import { HealthBar } from "../gameLogic/battle/ui/healthBar.js";
 
 const HP_TEXT_STYLE = Object.freeze({
   fontSize: "24px",
@@ -36,30 +32,11 @@ export class BattleScene extends Scene {
   /** @type {Phaser.Types.Input.Keyboard.CursorKeys} */
   #cursor;
 
+  #playerHealthBar;
+  #enemyHealthBar;
+
   constructor() {
     super(SCENES.BATTLE);
-  }
-
-  /**
-   * @param {number} x the x position
-   * @param {number} y the y position
-   * @return {Phaser.GameObjects.Container}
-   */
-  #createHealthBar(x, y) {
-    const scaleY = 0.7;
-    const leftCap = this.add
-      .image(x, y, HEALTH_BARS.LEFTCAP)
-      .setOrigin(0, 0.5)
-      .setScale(1, scaleY);
-    const middleCap = this.add
-      .image(leftCap.x + leftCap.width, y, HEALTH_BARS.MIDDLE)
-      .setOrigin(0, 0.5)
-      .setScale(1, scaleY);
-    middleCap.displayWidth = 360;
-    const rightcap = this.add
-      .image(middleCap.x + middleCap.displayWidth, y, HEALTH_BARS.RIGHTCAP)
-      .setScale(1, scaleY);
-    return this.add.container(x, y, [leftCap, middleCap, rightcap]);
   }
 
   // utility monster image generator method
@@ -79,6 +56,8 @@ export class BattleScene extends Scene {
 
   // Creates the player detail bar
   #createPlayerDetailContainer(x, y) {
+    this.#playerHealthBar = new HealthBar(this, 34, 34);
+
     const playerName = this.#createText(
       30,
       20,
@@ -90,7 +69,7 @@ export class BattleScene extends Scene {
       playerName,
       this.#createText(playerName.width + 45, 20, "L5", LEVEL_TEXT_STYLE),
       this.#createText(34, playerName.height + 30, "HP", HP_TEXT_STYLE),
-      this.#createHealthBar(34, 34),
+      this.#playerHealthBar.healthBarContainer,
       this.#createText(438, 85, "25 / 25", HP_DETAIL_TEXT_STYLE).setOrigin(
         1,
         0
@@ -100,6 +79,7 @@ export class BattleScene extends Scene {
 
   // Creates the enemy detail bar
   #createEnemyDetailContainer(x, y) {
+    const enemyHealthBar = new HealthBar(this, 34, 34);
     const monsterName = this.#createText(
       30,
       20,
@@ -111,17 +91,14 @@ export class BattleScene extends Scene {
       monsterName,
       this.#createText(monsterName.width + 45, 20, "L5", LEVEL_TEXT_STYLE),
       this.#createText(34, monsterName.height + 30, "HP", HP_TEXT_STYLE),
-      this.#createHealthBar(34, 34),
+      enemyHealthBar.healthBarContainer,
     ]);
   }
 
   create() {
-    // 1) creating the battle scene background
-    this.add.image(
-      this.scale.width / 2,
-      this.scale.height / 2,
-      BACKGROUND_IMAGE.KEY
-    );
+    // 1) creating the background
+    const background = new Background(this);
+    background.showForest();
 
     // 2) creating the monsters
     this.#createMonster({ x: 800, y: 150, key: MONSTERS.CARNODUSK });
@@ -138,7 +115,6 @@ export class BattleScene extends Scene {
 
     // 4) creating the battle UI
     this.#battleMenu = new BattleMenu(this);
-    // this.#battleMenu.showMainBattelMenu();
 
     // 5) creating the cursor keys
     this.#cursor = this.input.keyboard.createCursorKeys();

@@ -19,6 +19,9 @@ export const HEALTH_BARS = Object.freeze({
   RIGHTCAP: "rightcap",
   LEFTCAP: "leftCap",
   MIDDLE: "middle",
+  SHADOW: "shadow",
+  SHADOW_LEFT_CAP: "shadowLeft",
+  SHADOW_RIGHT_CAP: "shadowRight",
 });
 
 export const MONSTERS = Object.freeze({

@@ -13,6 +13,15 @@ import rightcap from "../../assets/images/kenneys-assets/ui-space-expansion/barH
 import leftCap from "../../assets/images/kenneys-assets/ui-space-expansion/barHorizontal_green_left.png";
 // @ts-ignore
 import middle from "../../assets/images/kenneys-assets/ui-space-expansion/barHorizontal_green_mid.png";
+// @ts-ignore
+import middleShadow from "../../assets/images/kenneys-assets/ui-space-expansion/barHorizontal_shadow_mid.png";
+// @ts-ignore
+import rightShadow from "../../assets/images/kenneys-assets/ui-space-expansion/barHorizontal_shadow_right.png";
+// @ts-ignore
+import leftShadow from "../../assets/images/kenneys-assets/ui-space-expansion/barHorizontal_shadow_left.png";
+
+// @ts-ignore
+import middleShadow from "../../assets/images/kenneys-assets/ui-space-expansion/barHorizontal_shadow_mid.png";
 
 // ** monster images **
 // @ts-ignore
@@ -48,6 +57,9 @@ export class Preloader extends Scene {
     this.load.image(HEALTH_BARS.RIGHTCAP, rightcap);
     this.load.image(HEALTH_BARS.LEFTCAP, leftCap);
     this.load.image(HEALTH_BARS.MIDDLE, middle);
+    this.load.image(HEALTH_BARS.SHADOW, middleShadow);
+    this.load.image(HEALTH_BARS.SHADOW_RIGHT_CAP, rightShadow);
+    this.load.image(HEALTH_BARS.SHADOW_LEFT_CAP, leftShadow);
 
     // Loading the monsters
     this.load.image(MONSTERS.IGUANIGNITE, iguanignite);
