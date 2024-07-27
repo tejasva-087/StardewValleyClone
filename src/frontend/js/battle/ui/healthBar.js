@@ -83,7 +83,6 @@ export class HealthBar {
       .image(x, y, HEALTH_BARS.SHADOW_LEFT_CAP)
       .setOrigin(0, 0.5)
       .setScale(1, this.#scaleY);
-
     this.#middleCapShadow = this.#scene.add
       .image(
         this.#leftCapShadow.x + this.#leftCapShadow.width,
@@ -93,14 +92,15 @@ export class HealthBar {
       .setOrigin(0, 0.5)
       .setScale(1, this.#scaleY);
     this.#middleCapShadow.displayWidth = this.#barWidth;
-
     this.#rightCapShadow = this.#scene.add
       .image(
         this.#middleCapShadow.x + this.#middleCapShadow.displayWidth,
         y,
         HEALTH_BARS.SHADOW_RIGHT_CAP
       )
-      .setScale(1, this.#scaleY);
+      .setScale(1, this.#scaleY)
+      .setOrigin(0, 0.5);
+
     this.#healthBarObject.add([
       this.#leftCapShadow,
       this.#middleCapShadow,

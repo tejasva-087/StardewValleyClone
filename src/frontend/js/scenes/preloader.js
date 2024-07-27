@@ -20,9 +20,6 @@ import rightShadow from "../../assets/images/kenneys-assets/ui-space-expansion/b
 // @ts-ignore
 import leftShadow from "../../assets/images/kenneys-assets/ui-space-expansion/barHorizontal_shadow_left.png";
 
-// @ts-ignore
-import middleShadow from "../../assets/images/kenneys-assets/ui-space-expansion/barHorizontal_shadow_mid.png";
-
 // ** monster images **
 // @ts-ignore
 import iguanignite from "../../assets/images/monster-tamer/monsters/iguanignite.png";

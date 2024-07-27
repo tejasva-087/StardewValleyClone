@@ -81,33 +81,34 @@ export class BattleScene extends Scene {
   }
 
   // Creates the enemy detail bar
-  #createEnemyDetailContainer(x, y) {
-    const enemyHealthBar = new HealthBar(this, 34, 34);
-    const monsterName = this.#createText(
-      30,
-      20,
-      MONSTERS.CARNODUSK,
-      NAME_TEXT_STYLE
-    );
-    return this.add.container(x, y, [
-      this.#createMonsterDetailBar({ x: 0, y: 0, scaleY: 0.8 }),
-      monsterName,
-      this.#createText(monsterName.width + 45, 20, "L5", LEVEL_TEXT_STYLE),
-      this.#createText(34, monsterName.height + 30, "HP", HP_TEXT_STYLE),
-      enemyHealthBar.healthBarContainer,
-    ]);
-  }
+  // #createEnemyDetailContainer(x, y) {
+  //   const enemyHealthBar = new HealthBar(this, 34, 34);
+  //   const monsterName = this.#createText(
+  //     30,
+  //     20,
+  //     MONSTERS.CARNODUSK,
+  //     NAME_TEXT_STYLE
+  //   );
+  //   return this.add.container(x, y, [
+  //     this.#createMonsterDetailBar({ x: 0, y: 0, scaleY: 0.8 }),
+  //     monsterName,
+  //     this.#createText(monsterName.width + 45, 20, "L5", LEVEL_TEXT_STYLE),
+  //     this.#createText(34, monsterName.height + 30, "HP", HP_TEXT_STYLE),
+  //     enemyHealthBar.healthBarContainer,
+  //   ]);
+  // }
 
   create() {
-    // 1) creating the background
+    // 0) creating the background
     const background = new Background(this);
     background.showForest();
 
+    // ! 1) creating the ENEMY monster and its components
     this.#activeEnemyBattleMonster = new EnemyMonster({
       scene: this,
       monsterDetails: {
-        name: MONSTERS.CARNODUSK,
-        assetKey: MONSTERS.CARNODUSK,
+        name: MONSTERS.IGUANIGNITE,
+        assetKey: MONSTERS.IGUANIGNITE,
         assetFrame: 0,
         currentHp: 25,
         maxHp: 25,
@@ -115,19 +116,15 @@ export class BattleScene extends Scene {
         baseAttackValue: 5,
       },
     });
+    // this.#activeEnemyBattleMonster.takeDamage(1);
+    // console.log(this.#activeEnemyBattleMonster.isFainted);
 
     // 2) creating the monsters
     this.#createMonster({ x: 800, y: 150, key: MONSTERS.CARNODUSK });
-    this.#createMonster({
-      x: 200,
-      y: 300,
-      key: MONSTERS.IGUANIGNITE,
-      flip: true,
-    });
 
     // 3) creating the monster detailbar
     this.#createPlayerDetailContainer(560, 315);
-    this.#createEnemyDetailContainer(0, 0);
+    // this.#createEnemyDetailContainer(0, 0);
 
     // 4) creating the battle UI
     this.#battleMenu = new BattleMenu(this);

@@ -5,9 +5,9 @@ const ENEMY_POSITION = Object.freeze({
   x: 200,
   y: 300,
 });
+
 export class EnemyMonster extends BattleMonster {
   /**
-   *
    * @param {BattleMonsterConfig} config
    */
   constructor(config) {
