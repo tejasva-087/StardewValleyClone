@@ -40,9 +40,9 @@ export class HealthBar {
     this.#healthBarObject = this.#scene.add.container(x, y, []);
 
     // 4) creating the healthbar images
+    this.#createHealthBarShadowImages(x, y);
     this.#createHealthBarImages(x, y);
     this.setMeterPercentage(1);
-    this.#createHealthBarShadowImages(x, y);
   }
 
   get healthBarContainer() {
@@ -91,7 +91,7 @@ export class HealthBar {
       )
       .setOrigin(0, 0.5)
       .setScale(1, this.#scaleY);
-    this.#middleCapShadow.displayWidth = this.#barWidth;
+    this.#middleCapShadow.displayWidth = this.#barWidth - 5;
     this.#rightCapShadow = this.#scene.add
       .image(
         this.#middleCapShadow.x + this.#middleCapShadow.displayWidth,

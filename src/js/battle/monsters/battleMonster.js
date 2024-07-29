@@ -1,11 +1,6 @@
 import { DETAIL_BAR_BG } from "../../config";
 import { HealthBar } from "../ui/healthBar";
 
-const HP_TEXT_STYLE = Object.freeze({
-  fontSize: "24px",
-  color: "#FF6505",
-});
-
 const LEVEL_TEXT_STYLE = Object.freeze({
   fontSize: "24px",
   color: "#ED474B",
@@ -30,7 +25,6 @@ export class BattleMonster {
   _healthBar;
   /** @protected @type {Phaser.GameObjects.Image} */
   _monsterGameObject;
-
   /** @protected @type {number} */
   _currentHealth;
   /** @protected @type {number} */
@@ -61,7 +55,9 @@ export class BattleMonster {
     );
 
     // 3) creating the monster components
-    this.#createMonsterComponents();
+    this._monsterComponentsContainer = this.#createMonsterComponents(
+      config.scaleDetailBarBg
+    );
   }
 
   /** @type {boolean} */
@@ -84,6 +80,11 @@ export class BattleMonster {
     return this._monsterDetails.baseAttackValue;
   }
 
+  /** @type {number} */
+  get level() {
+    return this._monsterDetails.currentLevel;
+  }
+
   /** @param {number} damage */
   /** @param {() => void} [callback] */
   takeDamage(damage, callback) {
@@ -98,12 +99,12 @@ export class BattleMonster {
     );
   }
 
-  #createMonsterComponents(x, y) {
+  #createMonsterComponents(scaleDetailBarBg = 1) {
     // 0) creating the display bg
     const backgroundImage = this._scene.add
-      .image(x, y, DETAIL_BAR_BG.KEY)
+      .image(0, 0, DETAIL_BAR_BG.KEY)
       .setOrigin(0, 0)
-      .setScale(1, 0.8);
+      .setScale(1, scaleDetailBarBg);
 
     // 1) creating the healthbar
     this._healthBar = new HealthBar(this._scene, 34, 34);
@@ -120,7 +121,7 @@ export class BattleMonster {
     const level = this._scene.add.text(
       monsterName.width + 45,
       20,
-      "L5",
+      `L${this.level}`,
       LEVEL_TEXT_STYLE
     );
 
@@ -131,7 +132,7 @@ export class BattleMonster {
       LEVEL_TEXT_STYLE
     );
 
-    return this._scene.add.container(x, y, [
+    return this._scene.add.container(0, 0, [
       backgroundImage,
       monsterName,
       this._healthBar.healthBarContainer,

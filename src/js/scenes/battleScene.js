@@ -7,6 +7,7 @@ import { Background } from "../battle/background.js";
 import { HealthBar } from "../battle/ui/healthBar.js";
 import { EnemyMonster } from "../battle/monsters/ememyMonster.js";
 import { BattleMonster } from "../battle/monsters/battleMonster.js";
+import { PlayerMonster } from "../battle/monsters/playerMonster.js";
 
 const HP_TEXT_STYLE = Object.freeze({
   fontSize: "24px",
@@ -35,75 +36,19 @@ export class BattleScene extends Scene {
   #cursor;
   /** @type {EnemyMonster} */
   #activeEnemyBattleMonster;
-
-  #playerHealthBar;
+  /** @type {PlayerMonster} */
+  #activePlayerBattleMonster;
 
   constructor() {
     super(SCENES.BATTLE);
   }
-
-  // utility monster image generator method
-  #createMonster({ x, y, key, flip = false }) {
-    this.add.image(x, y, key, 0).setFlipX(flip);
-  }
-
-  // utility betailbar bg generator method
-  #createMonsterDetailBar({ x, y, key = DETAIL_BAR_BG.KEY, scaleY = 1 }) {
-    return this.add.image(x, y, key).setOrigin(0, 0).setScale(1, scaleY);
-  }
-
-  // utility text generator method
-  #createText(x, y, text, style) {
-    return this.add.text(x, y, text.toUpperCase(), style);
-  }
-
-  // Creates the player detail bar
-  #createPlayerDetailContainer(x, y) {
-    this.#playerHealthBar = new HealthBar(this, 34, 34);
-
-    const playerName = this.#createText(
-      30,
-      20,
-      MONSTERS.IGUANIGNITE,
-      NAME_TEXT_STYLE
-    );
-    return this.add.container(x, y, [
-      this.#createMonsterDetailBar({ x: 0, y: 0 }),
-      playerName,
-      this.#createText(playerName.width + 45, 20, "L5", LEVEL_TEXT_STYLE),
-      this.#createText(34, playerName.height + 30, "HP", HP_TEXT_STYLE),
-      this.#playerHealthBar.healthBarContainer,
-      this.#createText(438, 85, "25 / 25", HP_DETAIL_TEXT_STYLE).setOrigin(
-        1,
-        0
-      ),
-    ]);
-  }
-
-  // Creates the enemy detail bar
-  // #createEnemyDetailContainer(x, y) {
-  //   const enemyHealthBar = new HealthBar(this, 34, 34);
-  //   const monsterName = this.#createText(
-  //     30,
-  //     20,
-  //     MONSTERS.CARNODUSK,
-  //     NAME_TEXT_STYLE
-  //   );
-  //   return this.add.container(x, y, [
-  //     this.#createMonsterDetailBar({ x: 0, y: 0, scaleY: 0.8 }),
-  //     monsterName,
-  //     this.#createText(monsterName.width + 45, 20, "L5", LEVEL_TEXT_STYLE),
-  //     this.#createText(34, monsterName.height + 30, "HP", HP_TEXT_STYLE),
-  //     enemyHealthBar.healthBarContainer,
-  //   ]);
-  // }
 
   create() {
     // 0) creating the background
     const background = new Background(this);
     background.showForest();
 
-    // ! 1) creating the ENEMY monster and its components
+    // * 1) creating the ENEMY monster and its components
     this.#activeEnemyBattleMonster = new EnemyMonster({
       scene: this,
       monsterDetails: {
@@ -111,20 +56,31 @@ export class BattleScene extends Scene {
         assetKey: MONSTERS.IGUANIGNITE,
         assetFrame: 0,
         currentHp: 25,
+        currentLevel: 1,
         maxHp: 25,
         attackIds: [],
         baseAttackValue: 5,
       },
     });
-    // this.#activeEnemyBattleMonster.takeDamage(1);
-    // console.log(this.#activeEnemyBattleMonster.isFainted);
 
-    // 2) creating the monsters
-    this.#createMonster({ x: 800, y: 150, key: MONSTERS.CARNODUSK });
+    // * 2) creating the PLAYER monster and its components
+    this.#activePlayerBattleMonster = new PlayerMonster({
+      scene: this,
+      monsterDetails: {
+        name: MONSTERS.CARNODUSK,
+        assetKey: MONSTERS.CARNODUSK,
+        assetFrame: 0,
+        currentHp: 25,
+        currentLevel: 2,
+        maxHp: 25,
+        attackIds: [],
+        baseAttackValue: 5,
+      },
+    });
 
-    // 3) creating the monster detailbar
-    this.#createPlayerDetailContainer(560, 315);
-    // this.#createEnemyDetailContainer(0, 0);
+    // this.#activeEnemyBattleMonster.takeDamage(10, () => {
+    //   this.#activePlayerBattleMonster.takeDamage(15);
+    // });
 
     // 4) creating the battle UI
     this.#battleMenu = new BattleMenu(this);
