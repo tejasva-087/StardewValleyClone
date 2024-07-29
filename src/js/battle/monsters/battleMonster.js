@@ -102,7 +102,7 @@ export class BattleMonster {
   #createMonsterComponents(scaleDetailBarBg = 1) {
     // 0) creating the display bg
     const backgroundImage = this._scene.add
-      .image(0, 0, DETAIL_BAR_BG.KEY)
+      .image(0, 0, DETAIL_BAR_BG.DETAIL_BAR_BG)
       .setOrigin(0, 0)
       .setScale(1, scaleDetailBarBg);
 

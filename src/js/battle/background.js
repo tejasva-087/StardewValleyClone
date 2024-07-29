@@ -19,12 +19,14 @@ export class Background {
       .image(
         this.#scene.scale.width / 2,
         this.#scene.scale.height / 2,
-        BACKGROUND_IMAGE.KEY
+        BACKGROUND_IMAGE.BACKGROUND_IMAGE
       )
       .setAlpha(0);
   }
 
   showForest() {
-    this.backgroundGameObject.setTexture(BACKGROUND_IMAGE.KEY).setAlpha(1);
+    this.backgroundGameObject
+      .setTexture(BACKGROUND_IMAGE.BACKGROUND_IMAGE)
+      .setAlpha(1);
   }
 }

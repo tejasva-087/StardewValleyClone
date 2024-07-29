@@ -36,27 +36,28 @@ import {
   HEALTH_BARS,
   MONSTERS,
   UI_ASSET_KEYS,
+  SCENES,
 } from "../config.js";
 
 export class Preloader extends Scene {
   constructor() {
-    super("Preloader");
+    super(SCENES.PRELOADER);
   }
 
   preload() {
     // Battle backgrounds
-    this.load.image(BACKGROUND_IMAGE.KEY, batelBg);
+    this.load.image(BACKGROUND_IMAGE.BACKGROUND_IMAGE, batelBg);
 
     // detailBar
-    this.load.image(DETAIL_BAR_BG.KEY, detailBar);
+    this.load.image(DETAIL_BAR_BG.DETAIL_BAR_BG, detailBar);
 
     // Battel assets
-    this.load.image(HEALTH_BARS.RIGHTCAP, rightcap);
-    this.load.image(HEALTH_BARS.LEFTCAP, leftCap);
-    this.load.image(HEALTH_BARS.MIDDLE, middle);
-    this.load.image(HEALTH_BARS.SHADOW, middleShadow);
-    this.load.image(HEALTH_BARS.SHADOW_RIGHT_CAP, rightShadow);
-    this.load.image(HEALTH_BARS.SHADOW_LEFT_CAP, leftShadow);
+    this.load.image(HEALTH_BARS.RIGHT_CAP, rightcap);
+    this.load.image(HEALTH_BARS.LEFT_CAP, leftCap);
+    this.load.image(HEALTH_BARS.MIDDLE_CAP, middle);
+    this.load.image(HEALTH_BARS.MIDDLE_SHADOW_CAP, middleShadow);
+    this.load.image(HEALTH_BARS.RIGHT_SHADOW_CAP, rightShadow);
+    this.load.image(HEALTH_BARS.LEFT_SHADOW_CAP, leftShadow);
 
     // Loading the monsters
     this.load.image(MONSTERS.IGUANIGNITE, iguanignite);
@@ -68,6 +69,6 @@ export class Preloader extends Scene {
 
   create() {
     // Starting the battle scene
-    this.scene.start("BattleScene");
+    this.scene.start(SCENES.BATTLE);
   }
 }

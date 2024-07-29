@@ -1,18 +1,10 @@
 import { Scene } from "phaser";
-import { SCENES, MONSTERS, DETAIL_BAR_BG } from "../config.js";
-
+import { SCENES, MONSTERS } from "../config.js";
 import { DIRECTION_OBJECT } from "../battle/ui/menu/battleMenuConfig.js";
 import { BattleMenu } from "../battle/ui/menu/battleMenu.js";
 import { Background } from "../battle/background.js";
-import { HealthBar } from "../battle/ui/healthBar.js";
 import { EnemyMonster } from "../battle/monsters/ememyMonster.js";
-import { BattleMonster } from "../battle/monsters/battleMonster.js";
 import { PlayerMonster } from "../battle/monsters/playerMonster.js";
-
-const HP_TEXT_STYLE = Object.freeze({
-  fontSize: "24px",
-  color: "#FF6505",
-});
 
 const LEVEL_TEXT_STYLE = Object.freeze({
   fontSize: "24px",

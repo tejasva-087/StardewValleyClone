@@ -56,18 +56,18 @@ export class HealthBar {
    */
   #createHealthBarImages(x, y) {
     this.#leftCap = this.#scene.add
-      .image(x, y, HEALTH_BARS.LEFTCAP)
+      .image(x, y, HEALTH_BARS.LEFT_CAP)
       .setOrigin(0, 0.5)
       .setScale(1, this.#scaleY);
     this.#middleCap = this.#scene.add
-      .image(this.#leftCap.x + this.#leftCap.width, y, HEALTH_BARS.MIDDLE)
+      .image(this.#leftCap.x + this.#leftCap.width, y, HEALTH_BARS.MIDDLE_CAP)
       .setOrigin(0, 0.5)
       .setScale(1, this.#scaleY);
     this.#rightCap = this.#scene.add
       .image(
         this.#middleCap.x + this.#middleCap.displayWidth,
         y,
-        HEALTH_BARS.RIGHTCAP
+        HEALTH_BARS.RIGHT_CAP
       )
       .setScale(1, this.#scaleY);
     this.#healthBarObject.add([this.#leftCap, this.#middleCap, this.#rightCap]);
@@ -80,14 +80,14 @@ export class HealthBar {
    */
   #createHealthBarShadowImages(x, y) {
     this.#leftCapShadow = this.#scene.add
-      .image(x, y, HEALTH_BARS.SHADOW_LEFT_CAP)
+      .image(x, y, HEALTH_BARS.LEFT_SHADOW_CAP)
       .setOrigin(0, 0.5)
       .setScale(1, this.#scaleY);
     this.#middleCapShadow = this.#scene.add
       .image(
         this.#leftCapShadow.x + this.#leftCapShadow.width,
         y,
-        HEALTH_BARS.SHADOW
+        HEALTH_BARS.MIDDLE_SHADOW_CAP
       )
       .setOrigin(0, 0.5)
       .setScale(1, this.#scaleY);
@@ -96,7 +96,7 @@ export class HealthBar {
       .image(
         this.#middleCapShadow.x + this.#middleCapShadow.displayWidth,
         y,
-        HEALTH_BARS.SHADOW_RIGHT_CAP
+        HEALTH_BARS.RIGHT_SHADOW_CAP
       )
       .setScale(1, this.#scaleY)
       .setOrigin(0, 0.5);
